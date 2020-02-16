@@ -19,16 +19,16 @@ express-handlebars v6.4.1<br><br>
 安裝流程
 --
 1.打開terminal並輸入git clone指令，將專案檔案下載到本機電腦。<br>
-  git clone https://github.com/whynotwilson/my-Restaurant.git<br>
+　　<font color="#0000dd">git clone https://github.com/whynotwilson/my-Restaurant.git</font><br>
   
 2.進入資料夾 my-Restaurant-master<br>
-  cd my-Restaurant-master<br>
+　　<font color="#0000dd">cd my-Restaurant-master</font><br>
   
-3.在 Terminal 輸入 npm install 指令，安裝 npm 套件<br>
-  npm install<br>
+3.在 Terminal 輸入 npm install 指令，安裝 npm 套件</font><br>
+　　<font color="#0000dd">npm install<br>
   
 4.執行專案<br>
-  npm run dev<br>
+　　<font color="#0000dd">npm run dev</font><br>
   
 5.到瀏覽器輸入網址 http://localhost:3000/<br>
 
