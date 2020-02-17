@@ -29,7 +29,7 @@ app.get('/search', (req, res) => {
     const restaurantList = restaurants.results.filter(restaurant => 
         {return restaurant.name.toLowerCase().includes(keyword.toLowerCase())}
     )
-    res.render('index', {restaurantList: restaurantList, keyword: keyword})
+    res.render('index', {restaurantList, keyword})
 })
 
 app.listen(port, () => {
