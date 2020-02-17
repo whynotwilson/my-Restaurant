@@ -14,7 +14,7 @@ app.use(express.static('public'))
 //routes setting
 app.get('/', (req, res) => {
     const restaurantList = restaurants.results
-    res.render('index', {restaurantList: restaurantList })
+    res.render('index', {restaurantList})
 })
 
 app.get('/restaurants/:id', (req, res) => {
