@@ -23,7 +23,7 @@
   <div class="row" id="data-panel">
     {{#each restaurants}}
     <div class="col-sm-3">
-      <a href="/restaurants/{{ this.id }}" class="text-secondary">
+      <a href="/restaurants/{{ this._id }}" class="text-secondary">
 
         <div class="card mb-2">
           <img class="card-img-top restaurant" src="{{this.image}}" alt="Card image cap">
@@ -41,7 +41,7 @@
           </div>
           <div class="pl-3">
             <a href="" style="display: inline-block;">Edit</a>
-            <a href="" style="display: inline-block;">Detail</a>
+            <a href="/restaurants/{{{this._id}}}" style="display: inline-block;">Detail</a>
             <form action="" method="POST" style="display: inline-block;">
               <button type="submit">delete</button>
             </form>

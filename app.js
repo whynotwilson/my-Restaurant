@@ -51,7 +51,15 @@ app.get('/restaurants', (req, res) => {
 // 新增一筆 Restaurant 頁面
 
 // 顯示一筆 Restaurant 的詳細內容
-
+app.get('/restaurants/:id', (req, res) => {
+  Restaurant.findById(req.params.id)
+    .lean()
+    .exec((err, restaurant) => {
+      if (err) return console.error(err)
+      console.log('restaurant' + restaurant)
+      return res.render('detail', { restaurant })
+    })
+})
 // 新增一筆  Restaurant
 
 // 修改 Restaurant 頁面
