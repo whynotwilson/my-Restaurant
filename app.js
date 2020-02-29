@@ -1,5 +1,4 @@
 const express = require('express')
-const restaurants = require('./restaurant.json')
 const app = express()
 const port = 3000
 const exphbs = require('express-handlebars')
@@ -62,6 +61,7 @@ app.get('/restaurants/:id', (req, res) => {
       return res.render('detail', { restaurant })
     })
 })
+
 // 新增一筆  Restaurant
 app.post('/restaurants', (req, res) => {
   const restaurant = new Restaurant({
@@ -111,17 +111,29 @@ app.post('/restaurants/:id/edit', (req, res) => {
     })
   })
 })
+
 // 刪除 Restaurant
+app.post('/restaurants/:id/delete', (req, res) => {
+  Restaurant.findById(req.params.id, (err, restaurant) => {
+    if (err) return console.error(err)
+    restaurant.remove(err => {
+      if (err) return console.error(err)
+      return res.redirect('/')
+    })
+  })
+})
 
 // 搜尋
 app.get('/search', (req, res) => {
-  const keyword = req.query.keyword
-  const restaurantList = restaurants.results.filter(restaurant => {
-    return restaurant.name.toLowerCase().includes(keyword.toLowerCase()
-    )
-  }
-  )
-  res.render('index', { restaurantList, keyword })
+  Restaurant.find()
+    .lean()
+    .exec((err, restaurants) => {
+      if (err) return console.error(err)
+      restaurants = restaurants.filter(item =>
+        item.name.toLowerCase().includes(req.query.keyword.toLowerCase()) || item.name_en.toLowerCase().includes(req.query.keyword.toLowerCase())
+      )
+      return res.render('index', { restaurants, keyword: req.query.keyword })
+    })
 })
 
 app.listen(port, () => {

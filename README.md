@@ -1,18 +1,22 @@
-AC week 1 實作 Restaurant清單
+AC week 3 實作 Restaurant 清單的 CRUD
 ===
  
 功能
 --
 1.使用者可以在首頁看到所有餐廳與它們的簡單資料<br>
 2.可以點進去查看詳細資料<br>
-3.可以使用關鍵字來查詢想要的餐廳<br><br>
+3.可以使用關鍵字來查詢想要的餐廳<br>
+4.可以在右上角新增餐廳<br>
+5.可以編輯餐廳資訊<br>
+6.可以刪除餐廳<br><br>
 
 
 建置環境
 --
 node.js v10.15.0<br>
 express v6.4.1<br>
-express-handlebars v6.4.1<br><br>
+express-handlebars v6.4.1<br>
+mongoose v6.4.1<br><br>
 
 
 

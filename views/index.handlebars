@@ -28,7 +28,7 @@
         <div class="card mb-2">
           <img class="card-img-top restaurant" src="{{this.image}}" alt="Card image cap">
           <div class="card-body p-3">
-            <h6 class="card-title mb-1">{{this.name}}</h6>
+            <h6 class="card-title mb-1">{{this.name}} ({{this.name_en}})</h6>
 
             <div class="restaurant-category mb-1">
               <i class="fas fa-utensils pr-2"></i> {{this.category}}
@@ -44,7 +44,7 @@
               <button type="button" class="btn btn-primary">Edit</button>
             </a>
             {{!-- <a href="/restaurants/{{{this._id}}}" style="display: inline-block;">Detail</a> --}}
-            <form action="" method="POST" style="display: inline-block;">
+            <form action="/restaurants/{{{this._id}}}/delete" method="POST" style="display: inline-block;">
               <button class="btn btn-danger" type="submit">delete</button>
             </form>
           </div>
