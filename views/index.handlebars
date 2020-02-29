@@ -22,7 +22,7 @@
   <!-- restaurant list -->
   <div class="row" id="data-panel">
     {{#each restaurants}}
-    <div class="col-sm-3">
+    <div class="col-sm-3 mb-4">
       <a href="/restaurants/{{ this._id }}" class="text-secondary">
 
         <div class="card mb-2">
@@ -39,11 +39,13 @@
               <i class="fas fa-star fa-xs"></i>
             </span>
           </div>
-          <div class="pl-3">
-            <a href="" style="display: inline-block;">Edit</a>
-            <a href="/restaurants/{{{this._id}}}" style="display: inline-block;">Detail</a>
+          <div class="" style="text-align: right;">
+            <a href="/restaurants/{{{this._id}}}/edit" style="display: inline-block;">
+              <button type="button" class="btn btn-primary">Edit</button>
+            </a>
+            {{!-- <a href="/restaurants/{{{this._id}}}" style="display: inline-block;">Detail</a> --}}
             <form action="" method="POST" style="display: inline-block;">
-              <button type="submit">delete</button>
+              <button class="btn btn-danger" type="submit">delete</button>
             </form>
           </div>
         </div>
