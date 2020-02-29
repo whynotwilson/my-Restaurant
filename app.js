@@ -49,6 +49,9 @@ app.get('/restaurants', (req, res) => {
 })
 
 // 新增一筆 Restaurant 頁面
+app.get('/restaurants/new', (req, res) => {
+  return res.render('new')
+})
 
 // 顯示一筆 Restaurant 的詳細內容
 app.get('/restaurants/:id', (req, res) => {
@@ -56,11 +59,27 @@ app.get('/restaurants/:id', (req, res) => {
     .lean()
     .exec((err, restaurant) => {
       if (err) return console.error(err)
-      console.log('restaurant' + restaurant)
       return res.render('detail', { restaurant })
     })
 })
 // 新增一筆  Restaurant
+app.post('/restaurants', (req, res) => {
+  const restaurant = new Restaurant({
+    name: req.body.name,
+    name_en: req.body.name_en,
+    category: req.body.category,
+    image: req.body.image,
+    location: req.body.location,
+    phone: req.body.phone,
+    google_map: req.body.google_map,
+    rating: req.body.rating,
+    description: req.body.description
+  })
+  restaurant.save(err => {
+    if (err) return console.error(err)
+    return res.redirect('/')
+  })
+})
 
 // 修改 Restaurant 頁面
 
