@@ -5,12 +5,13 @@ const port = 3000
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+const Restaurant = require('./models/restaurant')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
-// setting static files
+// 設定靜態檔案
 app.use(express.static('public'))
 
 // 資料庫連線
@@ -31,20 +32,35 @@ db.once('open', () => {
   console.log('mongoDB connected!')
 })
 
-// setting route
+// 設定路由
 // 首頁
 app.get('/', (req, res) => {
-  const restaurantList = restaurants.results
-  res.render('index', { restaurantList })
+  return res.redirect('/restaurants')
 })
 
-app.get('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  const restaurant = restaurants.results
-  console.log(restaurant[Number(id) - 1])
-  res.render('show', { restaurant: restaurant[Number(id) - 1] })
+// 列出全部 Restaurant
+app.get('/restaurants', (req, res) => {
+  Restaurant.find()
+    .lean()
+    .exec((err, restaurants) => {
+      if (err) return console.error(err)
+      return res.render('index', { restaurants })
+    })
 })
 
+// 新增一筆 Restaurant 頁面
+
+// 顯示一筆 Restaurant 的詳細內容
+
+// 新增一筆  Restaurant
+
+// 修改 Restaurant 頁面
+
+// 修改 Restaurant
+
+// 刪除 Restaurant
+
+// 搜尋
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
   const restaurantList = restaurants.results.filter(restaurant => {
