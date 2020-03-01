@@ -3,7 +3,7 @@
 <div class="container">
   <div class="row">
     <div class="col-12 col-md-10 mx-auto">
-      <form method="POST" action="/restaurants/{{{restaurant._id}}}/edit">
+      <form method="POST" action="/restaurants/{{{restaurant._id}}}?_method=PUT">
         <div class="form-group">
           <label for="inputName">中文名稱</label>
           <input type="text" class="form-control" id="inputName" name="name" placeholder="中文名稱"
