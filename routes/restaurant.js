@@ -3,8 +3,42 @@ const router = express.Router()
 const Restaurant = require('../models/restaurant')
 
 // 設定路由
+// 排列，放在後面不行，會先進入 "列出全部 Restaurant"，原因還沒找到
+router.get('/sort', (req, res) => {
+  let sortKeyword = ''
+  let sortValue
+  if (req.query.sort === 'a-z') {
+    sortKeyword = 'name'
+    sortValue = 1
+  } else if (req.query.sort === 'z-a') {
+    sortKeyword = 'name'
+    sortValue = -1
+  } else if (req.query.sort === 'ratingHTL') {
+    sortKeyword = 'rating'
+    sortValue = -1
+  } else if (req.query.sort === 'ratingLTH') {
+    sortKeyword = 'rating'
+    sortValue = 1
+  } else if (req.query.sort === 'category') {
+    sortKeyword = 'category'
+    sortValue = -1
+  }
+
+  // [] 使用變數的時候使用
+  // .sort({ [sortKeyword]: sortValue }) //[sortKeyword] 代表的是 sortKeyword 裡面的值
+  Restaurant.find()
+    .collation({ locale: 'en_US' }) // 設定英文語系排序
+    .sort({ [sortKeyword]: sortValue })
+    .lean()
+    .exec((err, restaurants) => {
+      if (err) return console.error(err)
+      return res.render('index', { restaurants })
+    })
+})
+
 // 列出全部 Restaurant
 router.get('/', (req, res) => {
+  console.log('列出全部 Restaurant')
   Restaurant.find()
     .lean()
     .exec((err, restaurants) => {
@@ -25,6 +59,21 @@ router.get('/:id', (req, res) => {
     .exec((err, restaurant) => {
       if (err) return console.error(err)
       return res.render('detail', { restaurant })
+    })
+})
+
+// 搜尋
+router.post('/search', (req, res) => {
+  Restaurant.find()
+    .lean()
+    .exec((err, restaurants) => {
+      if (err) return console.error(err)
+      restaurants = restaurants.filter(item =>
+        item.name.toLowerCase().includes(req.body.keyword.toLowerCase()) || // 中文名稱符合
+        item.name_en.toLowerCase().includes(req.body.keyword.toLowerCase()) || // 英文名稱符合
+        item.category.toLowerCase().includes(req.body.keyword.toLowerCase()) // 餐廳分類符合
+      )
+      return res.render('index', { restaurants, keyword: req.body.keyword })
     })
 })
 
@@ -87,19 +136,6 @@ router.delete('/:id/delete', (req, res) => {
       return res.redirect('/')
     })
   })
-})
-
-// 搜尋
-router.get('/search', (req, res) => {
-  Restaurant.find()
-    .lean()
-    .exec((err, restaurants) => {
-      if (err) return console.error(err)
-      restaurants = restaurants.filter(item =>
-        item.name.toLowerCase().includes(req.query.keyword.toLowerCase()) || item.name_en.toLowerCase().includes(req.query.keyword.toLowerCase())
-      )
-      return res.render('index', { restaurants, keyword: req.query.keyword })
-    })
 })
 
 module.exports = router

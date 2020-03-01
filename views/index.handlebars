@@ -1,28 +1,43 @@
 <!-- ./views/index.handlebars -->
 <div class="container mt-5">
 
-  <!-- search bar -->
-  <div class="container search-bar">
-    <div class="search-bar-outer">
+  <!-- search bar and sort bar -->
+  <div class="container d-flex justify-content-between mb-4 text-white pt-3 pb-3"
+    style="background-color:#fce2cf; border-radius: 8px">
+    <div class="p-2 flex-grow-1">
       <div class="search-bar-inner">
-        <form action="/search">
-          <h4 class="mb-2">尋找餐廳：</h4>
+        <form action="/restaurants/search" method="POST">
+          {{!-- <p class="mb-2" style="display: inline-block;">尋找餐廳：</p> --}}
           <div class="input-group">
             <input type="text" name="keyword" value="{{keyword}}" class="form-control" placeholder="輸入餐廳、分類"
               aria-label="Restaurant Name..." value="" aria-describedby="search-button">
             <div class="input-group-append">
-              <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+              <button class="btn" style="background-color: #9b4b4b;" type="submit" id="search-button"><i
+                  class="fas fa-search"></i></button>
             </div>
           </div>
         </form>
       </div>
     </div>
+    <div class="dropdown p-2">
+      <button class="btn dropdown-toggle" style="background-color: #9b4b4b;" type="button" id="dropdownMenuButton"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Sort
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="/restaurants/sort?sort=a-z">A-Z</a>
+        <a class="dropdown-item" href="/restaurants/sort?sort=z-a">Z-A</a>
+        <a class="dropdown-item" href="/restaurants/sort?sort=ratingHTL">評價高至低</a>
+        <a class="dropdown-item" href="/restaurants/sort?sort=ratingLTH">評價低至高</a>
+        <a class="dropdown-item" href="/restaurants/sort?sort=category">餐廳分類</a>
+      </div>
+    </div>
   </div>
 
   <!-- restaurant list -->
-  <div class="row" id="data-panel">
+  <div class="row " id="data-panel">
     {{#each restaurants}}
-    <div class="col-sm-3 mb-4">
+    <div class="col-4">
       <a href="/restaurants/{{ this._id }}" class="text-secondary">
 
         <div class="card mb-2">
@@ -43,7 +58,6 @@
             <a href="/restaurants/{{{this._id}}}/edit" style="display: inline-block;">
               <button type="button" class="btn btn-primary">Edit</button>
             </a>
-            {{!-- <a href="/restaurants/{{{this._id}}}" style="display: inline-block;">Detail</a> --}}
             <form action="/restaurants/{{{this._id}}}/delete?_method=DELETE" method="POST"
               style="display: inline-block;">
               <button class="btn btn-danger" type="submit">delete</button>
