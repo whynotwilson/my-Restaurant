@@ -28,6 +28,12 @@ const restaurantSchema = new Schema({
   },
   description: {
     type: String
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User', // 定義這個屬性是從 User model 取得
+    index: true, // 索引，設定成可用來查詢
+    required: true
   }
 })
 
