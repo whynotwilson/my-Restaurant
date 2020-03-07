@@ -79,5 +79,9 @@ router.post('/register', (req, res) => {
 })
 
 // 登出
+router.get('/logout', (req, res) => {
+  req.logout() // 執行 Passport 提供的方法清除 session
+  res.redirect('/users/login')
+})
 
 module.exports = router
