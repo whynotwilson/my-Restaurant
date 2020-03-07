@@ -10,9 +10,6 @@ router.get('/login', (req, res) => {
 })
 
 // 登入檢查
-// 1. Session
-// 2. Passport
-// 3. authenticate
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', { // 使用 passport 認證
     successRedirect: '/', // 登入成功回到根目錄
