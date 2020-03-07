@@ -3,48 +3,53 @@ const router = express.Router()
 const Restaurant = require('../models/restaurant')
 
 // 設定路由
-// 排列，放在後面不行，會先進入 "列出全部 Restaurant"，原因還沒找到
-router.get('/sort', (req, res) => {
-  let sortKeyword = ''
-  let sortValue
-  if (req.query.sort === 'a-z') {
-    sortKeyword = 'name'
-    sortValue = 1
-  } else if (req.query.sort === 'z-a') {
-    sortKeyword = 'name'
-    sortValue = -1
-  } else if (req.query.sort === 'ratingHTL') {
-    sortKeyword = 'rating'
-    sortValue = -1
-  } else if (req.query.sort === 'ratingLTH') {
-    sortKeyword = 'rating'
-    sortValue = 1
-  } else if (req.query.sort === 'category') {
-    sortKeyword = 'category'
-    sortValue = -1
-  }
-
-  // [] 使用變數的時候使用
-  // .sort({ [sortKeyword]: sortValue }) //[sortKeyword] 代表的是 sortKeyword 裡面的值
-  Restaurant.find()
-    .collation({ locale: 'en_US' }) // 設定英文語系排序
-    .sort({ [sortKeyword]: sortValue })
-    .lean()
-    .exec((err, restaurants) => {
-      if (err) return console.error(err)
-      return res.render('index', { restaurants })
-    })
-})
-
-// 列出全部 Restaurant
+// 列出全部 Restaurant & 排列
 router.get('/', (req, res) => {
-  console.log('列出全部 Restaurant')
-  Restaurant.find()
-    .lean()
-    .exec((err, restaurants) => {
-      if (err) return console.error(err)
-      return res.render('index', { restaurants })
-    })
+  if (req.query.sort) {
+    let sortKeyword = ''
+    let sortValue
+    let sort = '' // 傳給 view 顯示用
+
+    if (req.query.sort === 'a-z') {
+      sortKeyword = 'name'
+      sortValue = 1
+      sort = '名稱 a-z'
+    } else if (req.query.sort === 'z-a') {
+      sortKeyword = 'name'
+      sortValue = -1
+      sort = '名稱 z-a'
+    } else if (req.query.sort === 'ratingHTL') {
+      sortKeyword = 'rating'
+      sortValue = -1
+      sort = '評價高至低'
+    } else if (req.query.sort === 'ratingLTH') {
+      sortKeyword = 'rating'
+      sortValue = 1
+      sort = '評價低至高'
+    } else if (req.query.sort === 'category') {
+      sortKeyword = 'category'
+      sortValue = -1
+      sort = '餐廳分類'
+    }
+
+    // [] 使用變數的時候使用
+    // .sort({ [sortKeyword]: sortValue }) //[sortKeyword] 代表的是 sortKeyword 裡面的值
+    Restaurant.find()
+      .collation({ locale: 'en_US' }) // 設定英文語系排序
+      .sort({ [sortKeyword]: sortValue })
+      .lean()
+      .exec((err, restaurants) => {
+        if (err) return console.error(err)
+        return res.render('index', { restaurants, sort })
+      })
+  } else {
+    Restaurant.find()
+      .lean()
+      .exec((err, restaurants) => {
+        if (err) return console.error(err)
+        return res.render('index', { restaurants })
+      })
+  }
 })
 
 // 新增一筆 Restaurant 頁面
