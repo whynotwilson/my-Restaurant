@@ -23,7 +23,7 @@ app.use(express.static('public'))
 
 // 資料庫連線
 mongoose.connect('mongodb://localhost/restaurant', {
-  useNewUrlParser: true, useUnifiedTopology: true
+  useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true
 })
 
 // 資料庫連線後，透過 mongoose.connection 拿到 Connection 的物件
