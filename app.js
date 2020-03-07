@@ -48,6 +48,7 @@ require('./config/passport')(passport)
 // 在 res.locals 裡的資料，所有的 view 都可以存取
 app.use((req, res, next) => {
   res.locals.user = req.user
+  res.locals.isAuthenticated = req.isAuthenticated()
   next()
 })
 
