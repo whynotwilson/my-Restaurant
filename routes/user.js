@@ -12,6 +12,9 @@ router.get('/login', (req, res) => {
 // 登入檢查
 
 // 註冊頁面
+router.get('/register', (req, res) => {
+  res.render('register')
+})
 
 // 註冊檢查
 
