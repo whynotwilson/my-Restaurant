@@ -35,6 +35,7 @@ db.once('open', () => {
 // 設定路由器
 app.use('/', require('./routes/home'))
 app.use('/restaurants', require('./routes/restaurant'))
+app.use('/users', require('./routes/user'))
 
 app.listen(port, () => {
   console.log('My_restaurant server is running......')
