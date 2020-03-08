@@ -11,9 +11,14 @@ router.get('/login', (req, res) => {
 
 // 登入檢查
 router.post('/login', (req, res, next) => {
-  passport.authenticate('local', { // 使用 passport 認證
-    successRedirect: '/', // 登入成功回到根目錄
-    failureRedirect: '/users/login' // 登入失敗返回登入頁
+  passport.authenticate('local', (err, user, info) => {
+    if (err) throw err
+    if (user) {
+      passport.authenticate('local', { successRedirect: '/' })(req, res, next) // question
+    } else {
+      req.flash('warning_msg', info.message)
+      return res.redirect('/users/login')
+    }
   })(req, res, next)
 })
 
@@ -45,7 +50,7 @@ router.post('/register', (req, res) => {
     // 尋找 email 是否已被註冊
     User.findOne({ email: email }).then(user => {
       if (user) {
-        errors.push({ message: 'Email 已被使用' })
+        errors.push({ message: 'Email 已註冊' })
         res.render('register', {
           errors,
           name,

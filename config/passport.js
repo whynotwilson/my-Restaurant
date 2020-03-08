@@ -9,14 +9,14 @@ module.exports = passport => {
     new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
       User.findOne({ email: email }).then(user => {
         if (!user) {
-          return done(null, false, { message: 'That email is not registered' })
+          return done(null, false, { message: 'Email 尚未註冊' })
         }
         bcrypt.compare(password, user.password, (err, isMatch) => {
           if (err) throw err
           if (isMatch) {
             return done(null, user)
           } else {
-            return done(null, false, { message: 'Email or Password incorrect' })
+            return done(null, false, { message: 'Email 或密碼不正確' })
           }
         })
       })
@@ -31,6 +31,7 @@ module.exports = passport => {
       profileFiedlds: ['email', 'displayName']
     }, (accessToken, refreshToken, profile, done) => {
       // 檢查是否已註冊，未註冊就建立新用戶
+      console.log('profile._json', profile._json)
       User.findOne({ email: profile._json.email }).then(user => {
         if (!user) {
           var rendomPassword = Math.random().toString(36).slice(-8)
@@ -43,6 +44,7 @@ module.exports = passport => {
                 email: profile._json.email,
                 password: hash
               })
+              console.log('newUser.email', newUser.email)
               newUser.save()
                 .then(user => {
                   return done(null, user)

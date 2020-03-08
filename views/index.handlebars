@@ -12,7 +12,7 @@
             <input type="text" name="keyword" value="{{keyword}}" class="form-control" placeholder="輸入餐廳、分類"
               aria-label="Restaurant Name..." value="" aria-describedby="search-button">
             <div class="input-group-append">
-              <button class="btn" style="background-color: #9b4b4b;" type="submit" id="search-button"><i
+              <button class="btn" style="background-color: rgb(207, 113, 113);" type="submit" id="search-button"><i
                   class="fas fa-search"></i></button>
             </div>
           </div>
@@ -20,9 +20,9 @@
       </div>
     </div>
     <div class="dropdown p-2">
-      <button class="btn dropdown-toggle" style="background-color: #9b4b4b;" type="button" id="dropdownMenuButton"
-        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        排序方式: {{sort}}
+      <button class="btn dropdown-toggle" style="background-color: rgb(207, 113, 113);" type="button"
+        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <strong>排序方式: {{sort}}</strong>
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" href="/restaurants?sort=a-z">A-Z</a>
