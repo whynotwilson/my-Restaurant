@@ -1,4 +1,4 @@
-AC week 4 實作 Restaurant 清單與整合會員系統
+AC week 4 實作 會員系統 與 管理餐廳清單
 ===
  
 **功能**
