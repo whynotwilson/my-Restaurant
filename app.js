@@ -18,6 +18,10 @@ app.use(session({
   saveUninitialized: true // 強制將未初始化的 session 存回 session store
 }))
 
+if (process.env.NODE_ENV !== 'production') { // 如果不是 production 模式
+  require('dotenv').config() // 使用 dotenv 讀取 .env 檔案
+}
+
 // 設定靜態檔案
 app.use(express.static('public'))
 
@@ -56,6 +60,7 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/home'))
 app.use('/restaurants', require('./routes/restaurant'))
 app.use('/users', require('./routes/user'))
+app.use('/auth', require('./routes/auths'))
 
 app.listen(port, () => {
   console.log('My_restaurant server is running......')

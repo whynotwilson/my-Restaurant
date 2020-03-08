@@ -2,6 +2,7 @@ const LocalStrategy = require('passport-local').Strategy
 const mongoose = require('mongoose')
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
+const FacebookStrategy = require('passport-facebook').Strategy
 
 module.exports = passport => {
   passport.use(
@@ -18,6 +19,42 @@ module.exports = passport => {
             return done(null, false, { message: 'Email or Password incorrect' })
           }
         })
+      })
+    })
+  )
+
+  passport.use(
+    new FacebookStrategy({
+      clientID: process.env.FACEBOOK_ID,
+      clientSecret: process.env.FACEBOOK_SECRET,
+      callbackURL: process.env.FACEBOOK_CALLBACK,
+      profileFiedlds: ['email', 'displayName']
+    }, (accessToken, refreshToken, profile, done) => {
+      // 檢查是否已註冊，未註冊就建立新用戶
+      User.findOne({ email: profile._json.email }).then(user => {
+        if (!user) {
+          var rendomPassword = Math.random().toString(36).slice(-8)
+          bcrypt.genSalt(10, (err, salt) => {
+            if (err) console.log(err)
+            bcrypt.hash(rendomPassword, salt, (err, hash) => {
+              if (err) throw err
+              var newUser = User({
+                name: profile._json.name,
+                email: profile._json.email,
+                password: hash
+              })
+              newUser.save()
+                .then(user => {
+                  return done(null, user)
+                })
+                .catch(err => {
+                  console.log(err)
+                })
+            })
+          })
+        } else {
+          return done(null, user)
+        }
       })
     })
   )
