@@ -1,23 +1,40 @@
-AC week 3 實作 Restaurant 清單的 CRUD
+AC week 4 實作 Restaurant 清單與整合會員系統
 ===
  
-功能
+**功能**
 --
-1.使用者可以在首頁看到所有餐廳與它們的簡單資料<br>
-2.可以點進去查看詳細資料<br>
-3.可以使用關鍵字來查詢想要的餐廳<br>
-4.可以在右上角新增餐廳<br>
-5.可以編輯餐廳資訊<br>
-6.可以刪除餐廳<br>
-7.可以使用 Sort 排列餐廳順序<br><br>
+1. **會員系統**
+
+   * 註冊
+   * 登入
+   * 登出
+   
+2. **管理系統，可以管理一套屬於你的餐廳**
+
+   * 總覽
+   * 查看餐廳詳細資料
+   * 查詢
+   * 新增
+   * 編輯
+   * 刪除
+   * 排序
 
 
 建置環境
 --
-node.js v10.15.0<br>
-express v6.4.1<br>
-express-handlebars v6.4.1<br>
-mongoose v6.4.1<br><br>
+bcryptjs <br>
+body-parser<br>
+connect-flash<br>
+dotenv<br>
+express<br>
+express-handlebars<br>
+express-session<br>
+method-override<br>
+mongoose<br>
+passport<br>
+passport-facebook<br>
+passport-local<br><br>
+
 
 
 
